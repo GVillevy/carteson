@@ -2,58 +2,168 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Spotimal - Classement</title>
+    <title>Carteson</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <style>
         body{
             display: flex;
             flex-direction: column;
+            background-color: #141414;
+            margin: 0;
         }
-        table { border-collapse: collapse; width: 30%;  }
-        th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
-        th { background-color: #eee; }
+        table { 
+            border-collapse: collapse; 
+            width: 100%;  
+            border-collapse: separate; /* important ! sinon border-spacing ne fonctionne pas */
+            border-spacing: 0 3px;  
+            table-layout: fixed;
+            position: relative;
+
+        }
+
+        th, td { padding: 10px; border: 0px solid #ccc; text-align: left; }
+
+        th { background-color: #141414; }
+
         #main {
             display:flex;
             flex-direction: row;
             justify-content: space-around;
             width: 100%;
-
+            padding-top: 25px;
         }
         header{
             width: 100%;
             display: flex;
+            justify-content:space-between;
+            align-items: center;
+            height: 75px;
+            background-color: #181818;
+        }
+
+        header h1{
+            font-size: 24px;
+        }
+
+        header h1, header p{
+            margin: 15px;
+        }
+
+        h1,p,a,th,td,h2{
+            color:rgb(227, 227, 227);
+            font-family: "Roboto", sans-serif;
+            font-optical-sizing: auto;
+        }
+
+        #classement{
+            display: flex;
+            flex-direction: column;
+            width: 40%;
+        }
+
+        a{
+            color:#88ff00;
+            text-decoration: none;
+        }
+
+        .nouveaute{
+            color: #88ff00;
+            font-weight: bold;
+            white-space: nowrap; /* pour ne pas casser le texte */
+            border: 1px #88ff00 solid;
+            border-radius: 10px;
+            padding:5px;
+        }
+
+
+        .classement{
+            background-color: #141414;
+            width: 5%  ;       /* largeur fixe */
+            text-align:end; /* optionnel, centrer le texte */
+        }
+
+        #design-nouveaute{
+            color:rgb(83, 255, 83);
+            border: 1px rgb(83, 255, 83) solid;
+            border-radius: 10px; 
+            padding:1px; 
+        }
+
+        .score{
+            width: 10%  ;  
+            text-align: center;      /* largeur fixe */
+        }
+
+        .release_date{
+            text-align: center;      /* largeur fixe */
+
+        }
+
+        #header-classement{
+            width: 100%;
+            padding-bottom: 10px;
+            border-bottom: 1px rgb(129, 129, 129) solid;
+            display: flex;
+            flex-direction: row;
             justify-content: space-between;
             align-items: center;
+        }
+
+        #header-classement h1, #header-classement h2{
+            margin: 0;
+        }
+
+        #header-classement h2{
+            font-size: 14px;
         }
 
     </style>
 </head>
 <body>
     <header>
-        <h1 style="text-align:center;">Classement Bordeaux</h1>
+        <h1 style="text-align:center;">Bordeaux\Artistes émergents</h1>
         <p>
-            <a href="./famous">Mainstream</a>
+            <a href="./famous">➡️ Classement artistes populaires</a>
         </p>
     </header>
     <div id="main">
-        <table>
-            <tr>
-                <th>name_artist</th>
-                <th>name_track</th>
-                <th>score</th>
-                <th>release_date</th>
-                <th>difference_days</th>
-            </tr>
-            {% for artiste in artistes %}
-            <tr style="background-color: {{ artiste.color }}">
-                <td>{{ artiste.name_artist }}</td>
-                <td>{{ artiste.name_track }}</td>
-                <td>{{ artiste.score }}</td>
-                <td>{{ artiste.release_date }}</td>
-                <td>{{ artiste.difference_days }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/0vm6Uez2px3nvO4cZdcZ5c?utm_source=generator" width="30%" height="600" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <div id="classement">
+            <div id="header-classement">
+                <h1>Classement </h1>
+                <h2>mise à jour le {{ running_date }}</h2>
+            </div>
+            <table>
+                <tr>
+                    <th class="classement"></th>
+                    <th>Nom de l'artiste</th>
+                    <th>Nom du son</th>
+                    <th class="release_date">Date de sortie</th>
+                    <th class="score">Score</th>
+                </tr>
+                {% for artiste in artistes %}
+                <tr style="background-color: {{ artiste.color }}; position: relative;">
+                    <td class="classement">{{ artiste.classement }}</td>
+                    <td>{{ artiste.name_artist }}</td>
+                    <td>{{ artiste.name_track }}</td>
+                    <td class="release_date">{{ artiste.release_date }}</td>
+                    <td class="score">
+                        {{ artiste.score }}
+                    
+                        {% if artiste.difference_days < 20 %}
+                                <span class="nouveaute" style="position: absolute; right: -100px; top: 50%; transform: translateY(-50%);">
+                                    Nouveauté
+                                </span>
+                        {% else %}
+                        {% endif %}
+                    </td>
+
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/0vm6Uez2px3nvO4cZdcZ5c?utm_source=generator&theme=0" width="30%" height="1000px" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
 </body>
 </html>

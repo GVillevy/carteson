@@ -2,8 +2,12 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Spotimal - Classement</title>
+    <title>Carteson</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <style>
+
         body{
             display: flex;
             flex-direction: column;
@@ -37,22 +41,26 @@
     <div id="main">
         <table>
             <tr>
-                <th>name_artist</th>
-                <th>name_track</th>
-                <th>popularity_track</th>
-                <th>release_date</th>
-                <th>difference_days</th>
+                <th class="classement"></th>
+                <th>Nom de l'artiste</th>
+                <th>Nom du son</th>
+                <th>Date de sortie</th>
+                <th>Score</th>
             </tr>
             {% for artiste in artistes %}
-            <tr style="background-color: {{ artiste.color }}">
+            <tr style="background-color: {{ artiste.color }}; position: relative;">
+                <td class="classement">{{ artiste.classement }}</td>
                 <td>{{ artiste.name_artist }}</td>
                 <td>{{ artiste.name_track }}</td>
-                <td>{{ artiste.popularity_track }}</td>
                 <td>{{ artiste.release_date }}</td>
-                <td>{{ artiste.difference_days }}</td>
+                <td>{{ artiste.score }}</td>
             </tr>
+            {% if artiste.difference_days < 20 %}
+            <span class="nouveaute">Nouveauté</span>
+            {% endif %}
             {% endfor %}
         </table>
+
         <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/2whOuUsiuqXkWShRSotV6J?utm_source=generator" width="30%" height="600" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
 </body>
