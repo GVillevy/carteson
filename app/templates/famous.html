@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Spotimal - Classement</title>
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+        }
+        table { border-collapse: collapse; width: 30%;  }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
+        th { background-color: #eee; }
+        #main {
+            display:flex;
+            flex-direction: row;
+            justify-content: space-around;
+            width: 100%;
+
+        }
+        header{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1 style="text-align:center;">Classement Bordeaux</h1>
+        <p>
+            <a href="./pepites">Pépites</a>
+        </p>
+    </header>
+    <div id="main">
+        <table>
+            <tr>
+                <th>name_artist</th>
+                <th>name_track</th>
+                <th>popularity_track</th>
+                <th>release_date</th>
+                <th>difference_days</th>
+            </tr>
+            {% for artiste in artistes %}
+            <tr style="background-color: {{ artiste.color }}">
+                <td>{{ artiste.name_artist }}</td>
+                <td>{{ artiste.name_track }}</td>
+                <td>{{ artiste.popularity_track }}</td>
+                <td>{{ artiste.release_date }}</td>
+                <td>{{ artiste.difference_days }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/2whOuUsiuqXkWShRSotV6J?utm_source=generator" width="30%" height="600" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+</body>
+</html>
