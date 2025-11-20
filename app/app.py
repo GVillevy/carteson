@@ -5,13 +5,13 @@ import os
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/test")
 def home():
     return render_template("index.html")
 
 
 
-@app.route("/pepites")
+@app.route("/")
 def pepites():
     
     today = date.today() 
