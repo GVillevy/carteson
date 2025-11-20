@@ -15,17 +15,28 @@
         }
         table { 
             border-collapse: collapse; 
-            width: 100%;  
+            width: 90%;  
             border-collapse: separate; /* important ! sinon border-spacing ne fonctionne pas */
-            border-spacing: 0 3px;  
+            border-spacing: 0 8px;  
             table-layout: fixed;
             position: relative;
-
+            padding-top: 15px;
         }
 
-        th, td { padding: 10px; border: 0px solid #ccc; text-align: left; }
+        th, td { padding: 10px; border: 0px solid #ccc; text-align: center; }
 
-        th { background-color: #141414; }
+        th { 
+            background-color: #141414; 
+            color:#9d9d9d;
+            font-family: "Roboto", sans-serif;
+            font-optical-sizing: auto;
+            font-size: 14px;
+        }
+
+        tr{
+            vertical-align: center;
+
+        }
 
         #main {
             display:flex;
@@ -51,7 +62,7 @@
             margin: 15px;
         }
 
-        h1,p,a,th,td,h2{
+        h1,p,a,td,h2{
             color:rgb(227, 227, 227);
             font-family: "Roboto", sans-serif;
             font-optical-sizing: auto;
@@ -60,7 +71,7 @@
         #classement{
             display: flex;
             flex-direction: column;
-            width: 40%;
+            justify-content: center;
         }
 
         a{
@@ -80,10 +91,10 @@
 
         .classement{
             background-color: #141414;
-            width: 5%  ;       /* largeur fixe */
+            width: 2%  ;       /* largeur fixe */
             text-align:end; /* optionnel, centrer le texte */
+            font-size: 24px;
         }
-
         #design-nouveaute{
             color:rgb(83, 255, 83);
             border: 1px rgb(83, 255, 83) solid;
@@ -102,13 +113,10 @@
         }
 
         #header-classement{
-            width: 100%;
-            padding-bottom: 10px;
-            border-bottom: 1px rgb(129, 129, 129) solid;
             display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            align-items:flex-start;
+            justify-content: center;
         }
 
         #header-classement h1, #header-classement h2{
@@ -117,6 +125,100 @@
 
         #header-classement h2{
             font-size: 14px;
+        }
+
+        #color-legend {
+            width: 40%;
+            text-align: center;
+            font-family: "Roboto", sans-serif;
+            color: rgb(227, 227, 227);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .legend-title {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .legend-bar {
+            height: 20px;
+            border-radius: 10px;
+            background: linear-gradient(
+                to right,
+                rgb(64, 0, 30),     /* rouge sombre = sorties anciennes (2024) */
+                rgb(92, 40, 30),    /* orange sombre */
+                rgb(0, 64, 30)      /* vert sombre = sorties récentes (2025) */
+            );
+        }
+
+        .legend-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        #header-classement-avec-colorbar{
+            width: 100%;
+            padding-bottom: 30px;
+            border-bottom: 1px rgb(129, 129, 129) solid;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #tableau{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #header-classement-avec-colorbar #divheader{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+            align-items: center;
+        }
+        .player {
+            display: flex;           /* aligne iframe et badge horizontalement */
+            align-items: center;     /* centre verticalement le badge par rapport à l’iframe */
+            gap: 10px;               /* espace entre l’iframe et le badge */
+        }
+        .player iframe {
+            border-radius: 8px;
+        }
+
+        .col-artist {
+            width: 10%;   /* tu adaptes */
+        }
+
+        .col-track {
+            width: 10%;   /* tu adaptes */
+        }
+
+        .col-date {
+            width: 10%;
+        }
+        .boxnouveaute{
+            width: 10%;
+            text-align: center;
+            background-color: #141414;
+        }
+
+        #tableau h1{
+            width: 90%;
+        }
+
+        #encadrement-header{
+            width: 40%;
+            border: 1px rgb(83, 255, 83) solid;
+            border-radius: 15px;
         }
 
     </style>
@@ -130,40 +232,53 @@
     </header>
     <div id="main">
         <div id="classement">
-            <div id="header-classement">
-                <h1>Classement </h1>
-                <h2>mise à jour le {{ running_date }}</h2>
-            </div>
-            <table>
-                <tr>
-                    <th class="classement"></th>
-                    <th>Nom de l'artiste</th>
-                    <th>Nom du son</th>
-                    <th class="release_date">Date de sortie</th>
-                    <th class="score">Score</th>
-                </tr>
-                {% for artiste in artistes %}
-                <tr style="background-color: {{ artiste.color }}; position: relative;">
-                    <td class="classement">{{ artiste.classement }}</td>
-                    <td>{{ artiste.name_artist }}</td>
-                    <td>{{ artiste.name_track }}</td>
-                    <td class="release_date">{{ artiste.release_date }}</td>
-                    <td class="score">
-                        {{ artiste.score }}
-                    
-                        {% if artiste.difference_days < 20 %}
-                                <span class="nouveaute" style="position: absolute; right: -100px; top: 50%; transform: translateY(-50%);">
+            <div id="header-classement-avec-colorbar">
+                <div id="encadrement-header">
+                    <div id="divheader">
+                        <h1>✨La playlist✨</h1>
+                    </div>
+                    <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/0vm6Uez2px3nvO4cZdcZ5c?utm_source=generator&theme=0" width="100%" height="380px" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>    
+                </div>
+           </div>
+            <div id="tableau">
+                <h1>Le classement mis à jour le {{ running_date }}</h1>
+                <table>
+                    <tr>
+                        <th class="classement"></th>
+                        <th class="col-artist">Nom de l'artiste</th>
+                        <th class="col-track">Nom du son</th>
+                        <th class="release_date col-date">Date de sortie</th>
+                        <th class="score">Score</th>
+                        <th class="player">Lecteur Spotify</th>
+                        <th class="boxnouveaute"></th>
+                    </tr>
+                    {% for artiste in artistes %}
+                    <tr style="background: linear-gradient(to bottom, #222222, #1c1c1c); position: relative;">
+                        <td class="classement" style="border-right: 2px rgb(83, 255, 83) solid;">{{ artiste.classement }}</td>
+                        <td>{{ artiste.name_artist }}</td>
+                        <td>{{ artiste.name_track }}</td>
+                        <td class="release_date">{{ artiste.release_date }}</td>
+                        <td class="score">{{ artiste.score }}</td>
+                        <td class="player">
+                            <iframe
+                                src="https://open.spotify.com/embed/track/{{ artiste.id_track }}?utm_source=generator"
+                                width="100%" height="80"
+                                frameBorder="0"
+                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+                            </iframe>
+                        </td>
+                        <td class="boxnouveaute">
+                            {% if artiste.difference_days < 20 %}
+                                <span class="nouveaute">
                                     Nouveauté
                                 </span>
-                        {% else %}
-                        {% endif %}
-                    </td>
-
-                </tr>
-                {% endfor %}
-            </table>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
-        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/0vm6Uez2px3nvO4cZdcZ5c?utm_source=generator&theme=0" width="30%" height="1000px" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
 </body>
 </html>
