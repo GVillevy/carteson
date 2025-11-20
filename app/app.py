@@ -16,7 +16,7 @@ def pepites():
     
     today = date.today() 
     formatted_date = today.strftime("%d-%m-%Y")
-    formatted_date = "19-11-2025"
+    formatted_date = "20-11-2025"
     artistes = []
     difference_days_list = []
 
