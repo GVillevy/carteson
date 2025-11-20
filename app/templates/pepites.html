@@ -260,12 +260,14 @@
                         <td class="release_date">{{ artiste.release_date }}</td>
                         <td class="score">{{ artiste.score }}</td>
                         <td class="player">
-                            <iframe
-                                src="https://open.spotify.com/embed/track/{{ artiste.id_track }}?utm_source=generator"
-                                width="100%" height="80"
-                                frameBorder="0"
-                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
-                            </iframe>
+                            {% if artiste.score|int > 1 %}
+                                <iframe
+                                    src="https://open.spotify.com/embed/track/{{ artiste.id_track }}?utm_source=generator"
+                                    width="100%" height="80"
+                                    frameBorder="0"
+                                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+                                </iframe>
+                            {% endif %}
                         </td>
                         <td class="boxnouveaute">
                             {% if artiste.difference_days < 20 %}
