@@ -307,7 +307,7 @@
                         <td class="release_date">{{ artiste.release_date }}</td>
                         <td class="score">{{ artiste.score }}</td>
                         <td class="player">
-                            {% if artiste.score|int > 1 %}
+                            {% if artiste.score|int > 4 %}
                                 <iframe
                                     src="https://open.spotify.com/embed/track/{{ artiste.id_track }}?utm_source=generator"
                                     width="100%" height="80"
