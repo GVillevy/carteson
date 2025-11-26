@@ -24,7 +24,7 @@
             padding-top: 15px;
         }
 
-        th, td { padding: 10px; border: 0px solid #ccc; text-align: center; }
+        th, td { padding: 10px; border: 0px solid #ccc; text-align: left; }
 
         th { 
             background-color: #141414; 
@@ -44,7 +44,6 @@
             flex-direction: row;
             justify-content: space-around;
             width: 100%;
-            padding-top: 25px;
         }
         header{
             width: 100%;
@@ -166,9 +165,10 @@
             padding-bottom: 30px;
             border-bottom: 1px rgb(129, 129, 129) solid;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
             justify-content: center;
+            height: 90vh;
         }
 
         #tableau{
@@ -222,6 +222,79 @@
             border-radius: 15px;
         }
 
+        #colonne_artist_1,#colonne_artist_2 {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            height: 100%;
+        }
+
+        #colonne_artist_1 img,#colonne_artist_2 img{
+            width: 140px;
+            height: 140px;
+            object-fit: cover;     /* Recadre l'image pour remplir le carré */
+            transition: transform 0.2s ease,width 0.2s ease,height 0.2s ease;
+        }
+
+        #colonne_artist_1 img:hover,#colonne_artist_2 img:hover{
+            transform: translateY(-5px);
+            width: 180px;
+            height: 180px;
+
+        }
+
+        #scroll-button-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            bottom: 10vh; /* distance du bas */
+        }
+
+        #scroll-button {
+            background-color: rgba(136, 255, 0, 0.8); /* vert transparent */
+            color: #141414;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        #scroll-button:hover {
+            background-color: #88ff00;
+            transform: translateY(-3px);
+        }
+
+        .artist_square{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .artist_square a{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        td img{
+            width: 100%;
+            aspect-ratio: 1 / 1;  /* Force le format carré */
+            object-fit: cover;     /* Recadre l'image pour remplir le carré */
+        }
+
+        .colonne_image_tableau{
+            width: 5%;
+        }
+
+
+
         @media (max-width: 600px) {
             header {
                 flex-direction: column;
@@ -267,24 +340,91 @@
                 width: 95%;
                 padding-top: 0px;
             }
+
+            #colonne_artist_1,#colonne_artist_2,.release_date{
+                display: none;
+            }
+
+            .score{
+                width: 5%;
+            }
+
+            .colonne_image_tableau{
+                width: 10%;
+                padding: 5px;
+            }
+
+            td{
+                padding: 5px;
+            }
+
+            .classement{
+                text-align: center;
+            }
             
 
         }
 
     </style>
+
 </head>
 <body>
     <header>
-        <h1 style="text-align:center;">Bordeaux\Artistes émergents</h1>
+        <h1 style="text-align:center;">Artistes émergents \ BORDEAUX</h1>
     </header>
     <div id="main">
         <div id="classement">
             <div id="header-classement-avec-colorbar">
+                <div id="colonne_artist_1">
+                    <div class="artist_square">
+                        <a href="https://open.spotify.com/artist/{{ artistes[0].id_artist }}" target="_blank">
+                            <img src="{{ artistes[0].image_artist }}" alt="Image Spotify">
+                        </a>
+                        <p>{{ artistes[0].name_artist }}</p>
+                    </div>
+                    <div class="artist_square">
+                        <a href="https://open.spotify.com/artist/{{ artistes[1].id_artist }}" target="_blank">
+                            <img src="{{ artistes[1].image_artist }}" alt="Image Spotify">
+                        </a>                        
+                        <p>{{ artistes[1].name_artist }}</p>
+                    </div>
+                    <div class="artist_square">
+                        <a href="https://open.spotify.com/artist/{{ artistes[2].id_artist }}" target="_blank">
+                            <img src="{{ artistes[2].image_artist }}" alt="Image Spotify">
+                        </a>
+                        <p>{{ artistes[2].name_artist }}</p>
+                    </div>
+                </div>
                 <div id="encadrement-header">
                     <div id="divheader">
                         <h1>✨La playlist✨</h1>
                     </div>
                     <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/0vm6Uez2px3nvO4cZdcZ5c?utm_source=generator&theme=0" width="100%" height="380px" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>    
+                </div>
+                <div id="colonne_artist_2">
+                    <div class="artist_square">
+                        <a href="https://open.spotify.com/artist/{{ artistes[3].id_artist }}" target="_blank">
+                            <img src="{{ artistes[3].image_artist }}" alt="Image Spotify">
+                        </a>
+                        <p>{{ artistes[3].name_artist }}</p>
+                    </div>
+                    <div class="artist_square">
+                        <a href="https://open.spotify.com/artist/{{ artistes[4].id_artist }}" target="_blank">
+                            <img src="{{ artistes[4].image_artist }}" alt="Image Spotify">
+                        </a>
+                        <p>{{ artistes[4].name_artist }}</p>
+                    </div>
+                    <div class="artist_square">
+                        <a href="https://open.spotify.com/artist/{{ artistes[5].id_artist }}" target="_blank">
+                            <img src="{{ artistes[5].image_artist }}" alt="Image Spotify">
+                        </a>
+                        <p>{{ artistes[5].name_artist }}</p>
+                    </div>
+                </div>
+                <div id="scroll-button-container">
+                    <button id="scroll-button">
+                        ⬇ Voir le classement
+                    </button>
                 </div>
            </div>
             <div id="tableau">
@@ -292,30 +432,25 @@
                 <table>
                     <tr>
                         <th class="classement"></th>
+                        <th class="colonne_image_tableau"></th>
                         <th class="col-artist">Nom de l'artiste</th>
-                        <th class="col-track">Nom du son</th>
+                        <th class="col-track">Son référence</th>
                         <th class="release_date col-date">Date de sortie</th>
-                        <th class="score">Score</th>
-                        <th class="player">Lecteur Spotify</th>
+                        <th class="score" onclick="sortTable(0)" >Score Carteson</th>
+                        <th class="score">Popularité de l'artiste</th>
+                        <th class="score">Popularité du son</th>
                         <th class="boxnouveaute"></th>
                     </tr>
                     {% for artiste in artistes %}
                     <tr style="background: linear-gradient(to bottom, #222222, #1c1c1c); position: relative;">
                         <td class="classement" style="border-right: 2px rgb(83, 255, 83) solid;">{{ artiste.classement }}</td>
+                        <td class="colonne_image_tableau"><img src="{{ artiste.image_artist }}" alt="Image Spotify"></td>
                         <td>{{ artiste.name_artist }}</td>
                         <td>{{ artiste.name_track }}</td>
                         <td class="release_date">{{ artiste.release_date }}</td>
                         <td class="score">{{ artiste.score }}</td>
-                        <td class="player">
-                            {% if artiste.score|int > 4 %}
-                                <iframe
-                                    src="https://open.spotify.com/embed/track/{{ artiste.id_track }}?utm_source=generator"
-                                    width="100%" height="80"
-                                    frameBorder="0"
-                                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
-                                </iframe>
-                            {% endif %}
-                        </td>
+                        <td class="score">{{ artiste.popularity_artist }}</td>
+                        <td class="score">{{ artiste.popularity_track }}</td>
                         <td class="boxnouveaute">
                             {% if artiste.difference_days < 20 %}
                                 <span class="nouveaute">
@@ -329,5 +464,20 @@
             </div>
         </div>
     </div>
+
+<script>
+    document.getElementById("scroll-button").addEventListener("click", function() {
+        document.getElementById("tableau").scrollIntoView({ 
+            behavior: "smooth" 
+        });
+    });
+
+    
+
+
+
+
+
+</script>
 </body>
 </html>
