@@ -7,18 +7,26 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
     <style>
         body{
             display: flex;
             flex-direction: column;
             background-color: #141414;
             margin: 0;
+            position: relative;
+
         }
+                
+
         table { 
             border-collapse: collapse; 
             width: 90%;  
             border-collapse: separate; /* important ! sinon border-spacing ne fonctionne pas */
-            border-spacing: 0 8px;  
+            border-spacing: 0 12px;  
             table-layout: fixed;
             position: relative;
             padding-top: 15px;
@@ -44,28 +52,31 @@
             flex-direction: row;
             justify-content: space-around;
             width: 100%;
+            padding-top: 2vh;
         }
         header{
             width: 100%;
             display: flex;
             justify-content:space-between;
             align-items: center;
-            height: 75px;
-            background-color: #181818;
+            background-color: rgba(0, 0, 0, 0.1);
         }
 
         header h1{
-            font-size: 24px;
+            font-size: 20px;
+            color: #ababab;;
         }
 
         header h1, header p{
-            margin: 15px;
+            margin: 10px;
         }
 
         h1,p,a,td,h2{
             color:rgb(227, 227, 227);
-            font-family: "Roboto", sans-serif;
+
+            font-family: "Inter", sans-serif;
             font-optical-sizing: auto;
+            font-style: normal;
         }
 
         #classement{
@@ -163,7 +174,6 @@
         #header-classement-avec-colorbar{
             width: 100%;
             padding-bottom: 30px;
-            border-bottom: 1px rgb(129, 129, 129) solid;
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -219,7 +229,7 @@
         #encadrement-header{
             display: flex;
             flex-direction: column;
-            height: 80%;
+            height: 100%;
             width: 40%;
             border-radius: 15px;
             justify-content: space-around;
@@ -263,21 +273,32 @@
         }
 
         #scroll-button {
-            background-color: rgba(136, 255, 0, 0.8); /* vert transparent */
+            background: linear-gradient(45deg, #aaff00, #00ff04, #9fee62, #9dff00);
+            background-size: 300% 300%; /* pour l'animation */
             color: #141414;
             border: none;
             border-radius: 25px;
-            padding: 10px 20px;
+            padding: 20px 30px;
             font-size: 14px;
             font-weight: bold;
             cursor: pointer;
-            transition: transform 0.2s ease, background-color 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            animation: gradientShift 3s ease infinite;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
         #scroll-button:hover {
-            background-color: #88ff00;
-            transform: translateY(-3px);
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.3);
         }
+
+        /* Animation du dégradé */
+        @keyframes gradientShift {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+
 
         .artist_square{
             display: flex;
@@ -292,6 +313,13 @@
             justify-content: center;
         }
 
+        .artist_square p{
+            color: white;;
+
+        }
+
+
+
         td img{
             width: 100%;
             aspect-ratio: 1 / 1;  /* Force le format carré */
@@ -300,6 +328,19 @@
 
         .colonne_image_tableau{
             width: 5%;
+            padding: 0px;
+        }
+
+        #divheader h2{
+            font-size: 16px;
+            font-family: "Inter", sans-serif;
+            font-optical-sizing: auto;
+            font-style: normal;
+            font-weight: 250;
+            text-align: center;
+            margin: 0px;
+            width: 100%;
+            color: #ababab;;
         }
 
 
@@ -332,7 +373,7 @@
 
             .classement{
                 font-size: 12px;
-                width: 5%;
+                width: 0%;
                 text-align: left;
             }
 
@@ -378,7 +419,7 @@
 </head>
 <body>
     <header>
-        <h1 style="text-align:center;">Artistes émergents \ BORDEAUX</h1>
+        <h1 style="text-align:center;">artistes_emergents \ <span style="color:#88ff00">BORDEAUX</span></h1>
     </header>
     <div id="main">
         <div id="classement">
@@ -406,12 +447,13 @@
                 <div id="encadrement-header">
                     
                     <div id="divheader">
-                        <h1>✨La playlist✨</h1>
+                        <h1>La playlist.</h1>
+                        <h2>Les artistes bordelais émergents et indépendants à découvrir dès maintenant</h2>
                     </div>
-                    <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/0vm6Uez2px3nvO4cZdcZ5c?utm_source=generator&theme=0" width="100%" height="70%" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>    
+                    <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/0vm6Uez2px3nvO4cZdcZ5c?utm_source=generator&theme=0" width="100%" height="50%" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>    
                     <div id="scroll-button-container">
                         <button id="scroll-button">
-                            ⬇ Voir le classement
+                            Voir le classement
                         </button>
                     </div>
                 </div>
@@ -438,7 +480,7 @@
 
            </div>
             <div id="tableau">
-                <h1>Le classement mis à jour le {{ running_date }}</h1>
+                <h1>Le classement du {{ running_date }}</h1>
                 <table>
                     <tr>
                         <th class="classement"></th>

@@ -3,13 +3,14 @@ import csv
 from datetime import date
 import os
 import sqlite3
+from datetime import datetime
+import locale
 
 app = Flask(__name__)
 
 @app.route("/test")
 def home():
     return render_template("index.html")
-
 
 
 @app.route("/")
@@ -34,6 +35,18 @@ def pepites():
         row_dict = dict(zip(columns, row))  # transforme la ligne en dict
         row_dict["difference_days"] = int(row_dict["difference_days"])  # si nécessaire
         difference_days_list.append(row_dict["difference_days"])
+
+        date_str = row_dict["release_date"]  # ex: "2025-03-12"
+
+        # Conversion
+        date_obj = datetime.strptime(date_str, "%Y-%m-%d")
+        row_dict["release_date"] = date_obj.strftime("%d/%m/%Y")
+
+        name = row_dict["name_track"]
+
+        if len(name) > 20:
+            row_dict["name_track"] = name[:17] + "..."
+
         artistes.append(row_dict)
         running_date = row_dict["running_date"]  # tu peux récupérer la dernière date par exemple
 
@@ -66,8 +79,15 @@ def pepites():
         row["color"] = value_to_color(row["difference_days"])
 
 
+    # Pour avoir les mois en français
+    locale.setlocale(locale.LC_TIME, "fr_FR.UTF-8")
 
-    return render_template("pepites.html", artistes=artistes,running_date=running_date)
+    date_str = running_date
+    date_obj = datetime.strptime(date_str, "%d-%m-%Y")
+
+    date_humaine = date_obj.strftime("%d %B %Y")
+
+    return render_template("pepites.html", artistes=artistes,running_date=date_humaine)
 
 
 if __name__ == "__main__":
