@@ -59,7 +59,8 @@
             display: flex;
             justify-content:space-between;
             align-items: center;
-            background-color: rgba(0, 0, 0, 0.1);
+            background: linear-gradient(to right, #091106, #141414);
+
         }
 
         header h1{
@@ -237,6 +238,7 @@
 
         #encadrement-header iframe{
             border: 1px rgb(83, 255, 83) solid;
+            box-shadow: 0px 20px 50px lab(11 -15.65 11.65);
 
         }
 
@@ -273,7 +275,7 @@
         }
 
         #scroll-button {
-            background: linear-gradient(45deg, #aaff00, #00ff04, #9fee62, #9dff00);
+            background: linear-gradient(45deg, #88ff00, #00ff04, #84dc20, #4fae10);
             background-size: 300% 300%; /* pour l'animation */
             color: #141414;
             border: none;
@@ -361,6 +363,7 @@
             #encadrement-header{
                 width: 95%;
                 border-radius: 15px;
+                height: 90%;
             }
 
             table iframe,.player,.boxnouveaute{
@@ -411,7 +414,9 @@
                 text-align: center;
             }
             
-
+            #header-classement-avec-colorbar{
+                align-items: flex-start;
+            }
         }
 
     </style>
@@ -419,7 +424,7 @@
 </head>
 <body>
     <header>
-        <h1 style="text-align:center;">artistes_emergents \ <span style="color:#88ff00">BORDEAUX</span></h1>
+        <h1 style="text-align:center;">carteson \ <span style="color:#88ff00">BORDEAUX</span></h1>
     </header>
     <div id="main">
         <div id="classement">
@@ -486,11 +491,12 @@
                         <th class="classement"></th>
                         <th class="colonne_image_tableau"></th>
                         <th class="col-artist">Nom de l'artiste</th>
-                        <th class="col-track">Son référence</th>
-                        <th class="release_date col-date">Date de sortie</th>
                         <th class="score" onclick="sortTable(0)" >Score Carteson</th>
                         <th class="score">Popularité de l'artiste</th>
+                        <th class="col-track">Son référence</th>
                         <th class="score">Popularité du son</th>
+                        <th class="release_date col-date">Date de sortie</th>
+
                         <th class="boxnouveaute"></th>
                     </tr>
                     {% for artiste in artistes %}
@@ -498,11 +504,11 @@
                         <td class="classement" style="border-right: 2px rgb(83, 255, 83) solid;">{{ artiste.classement }}</td>
                         <td class="colonne_image_tableau"><img src="{{ artiste.image_artist }}" alt="Image Spotify"></td>
                         <td>{{ artiste.name_artist }}</td>
-                        <td>{{ artiste.name_track }}</td>
-                        <td class="release_date">{{ artiste.release_date }}</td>
                         <td class="score">{{ artiste.score }}</td>
                         <td class="score">{{ artiste.popularity_artist }}</td>
+                        <td>{{ artiste.name_track }}</td>
                         <td class="score">{{ artiste.popularity_track }}</td>
+                        <td class="release_date">{{ artiste.release_date }}</td>
                         <td class="boxnouveaute">
                             {% if artiste.difference_days < 20 %}
                                 <span class="nouveaute">
