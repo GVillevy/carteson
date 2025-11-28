@@ -1,10 +1,8 @@
 from flask import Flask, render_template
 import csv
-from datetime import date
+from datetime import date,datetime
 import os
 import sqlite3
-from datetime import datetime
-import locale
 
 app = Flask(__name__)
 
@@ -79,13 +77,24 @@ def pepites():
         row["color"] = value_to_color(row["difference_days"])
 
 
-    # Pour avoir les mois en français
-    locale.setlocale(locale.LC_TIME, "fr_FR.UTF-8")
+    mois = {
+        1: "janvier",
+        2: "février",
+        3: "mars",
+        4: "avril",
+        5: "mai",
+        6: "juin",
+        7: "juillet",
+        8: "août",
+        9: "septembre",
+        10: "octobre",
+        11: "novembre",
+        12: "décembre"
+    }
 
-    date_str = running_date
-    date_obj = datetime.strptime(date_str, "%d-%m-%Y")
-
-    date_humaine = date_obj.strftime("%d %B %Y")
+    date_str = "2025-03-12"
+    date_obj = datetime.strptime(date_str, "%Y-%m-%d")
+    date_humaine = f"{date_obj.day} {mois[date_obj.month]} {date_obj.year}"
 
     return render_template("pepites.html", artistes=artistes,running_date=date_humaine)
 
