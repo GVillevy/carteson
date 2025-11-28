@@ -92,7 +92,7 @@ def pepites():
         12: "décembre"
     }
 
-    date_str = "2025-03-12"
+    date_str = running_date
     date_obj = datetime.strptime(date_str, "%Y-%m-%d")
     date_humaine = f"{date_obj.day} {mois[date_obj.month]} {date_obj.year}"
 
