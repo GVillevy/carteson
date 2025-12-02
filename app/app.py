@@ -19,7 +19,7 @@ def pepites():
     cursor = conn.cursor()
 
     # Exécution de la requête
-    cursor.execute("SELECT * FROM pepites WHERE running_date = (SELECT MAX(running_date) FROM pepites) ORDER BY score DESC;")
+    cursor.execute("SELECT * FROM pepites WHERE date(substr(running_date,7,4)||'-'||substr(running_date,4,2)||'-'||substr(running_date,1,2)) = (SELECT MAX(date(substr(running_date,7,4)||'-'||substr(running_date,4,2)||'-'||substr(running_date,1,2))) FROM pepites) ORDER BY score DESC;")
     rows = cursor.fetchall()  # récupère toutes les lignes
 
     # Récupérer les noms des colonnes pour construire des dictionnaires
@@ -94,7 +94,7 @@ def pepites():
 
     date_obj = datetime.strptime(running_date, "%d-%m-%Y")
     date_humaine = f"{date_obj.day} {mois[date_obj.month]} {date_obj.year}"
-
+    print(artistes)
     return render_template("pepites.html", artistes=artistes,running_date=date_humaine)
 
 
